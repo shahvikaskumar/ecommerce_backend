@@ -14,7 +14,7 @@ app.use(cors());
 app.use(express.json());
 
 
-// app.use('/.netlify/functions/index', authroutes);
+app.use('/.netlify/functions/index', authroutes);
 app.use('/.netlify/functions/index', userroutes);
 // app.use('/api',userroutes);
 
