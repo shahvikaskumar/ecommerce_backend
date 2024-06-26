@@ -1,7 +1,9 @@
 const express=require('express');
 const cors=require('cors');
-const conn = require('./Utility/connectdb');
-const authroutes = require('./routes/auth_route');
+const conn = require('../Utility/connectdb');
+const authroutes = require('../routes/auth_route');
+const serverless = require('serverless-http');
+
 // const userroutes = require('./routes/user_route');
 // const tweetroutes = require('./routes/tweet_route');
 const app=express();
@@ -11,7 +13,8 @@ app.use(cors());
 
 app.use(express.json());
 
-app.use('/api',authroutes);
+
+app.use('/.netlify/functions/index',authroutes);
 // app.use('/api',tweetroutes);
 // app.use('/api',userroutes);
 
@@ -30,3 +33,5 @@ const startserver = async   () => {
 };
 
 startserver();
+
+module.exports.handler = serverless(app);
