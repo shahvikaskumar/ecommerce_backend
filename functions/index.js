@@ -4,7 +4,7 @@ const conn = require('../Utility/connectdb');
 const authroutes = require('../routes/auth_route');
 const serverless = require('serverless-http');
 
-// const userroutes = require('./routes/user_route');
+const userroutes = require('../routes/user_route');
 // const tweetroutes = require('./routes/tweet_route');
 const app=express();
 const port=5000;
@@ -14,8 +14,8 @@ app.use(cors());
 app.use(express.json());
 
 
-app.use('/.netlify/functions/index',authroutes);
-// app.use('/api',tweetroutes);
+// app.use('/.netlify/functions/index', authroutes);
+app.use('/.netlify/functions/index', userroutes);
 // app.use('/api',userroutes);
 
 const startserver = async   () => {
