@@ -40,7 +40,7 @@ const Authregister = async (req,res) => {
 
 //#region Auth login
 const Authlogin = async(req,res) => {
-    const {email,password}=req.body;
+    const {email,password }=req.body;
 
     if(!email || !password){
         return res.status(400).json({error:"Email or password are empty."});        
@@ -61,7 +61,7 @@ const Authlogin = async(req,res) => {
         const user = userin.toObject();
         delete user.password;
         
-        res.status(200).json({success:"Login Successfully",token,user});
+        res.status(200).json({success:"Login Successfully", token ,user});
         
 
     }
