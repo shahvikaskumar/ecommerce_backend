@@ -1,8 +1,11 @@
 const express = require("express");
 const router=express.Router();
-const { Authregister } = require("../controllers/auth_controller");
+const requireauth=require('../middleware/auth');
+const { Authregister, Authlogin, Authverify } = require("../controllers/auth_controller");
 
 router.post('/auth/register', Authregister);
+router.post("/auth/login",Authlogin);
+router.post("/auth/verify-token",requireauth, Authverify);
 
 
 module.exports = router;
