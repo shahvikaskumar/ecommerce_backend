@@ -107,11 +107,12 @@ const Authverifyemail = async (req,res) => {
             }
         }
         else {
-            res.status(200).json({success:"Email ID already verified"});            
+            res.status(200).json({success:"Email ID already verified."});            
         }        
     }
     catch(error){
-        console.log(error);        
+        console.log(error); 
+        res.status(500).json({error:"an error occured while verification email."});       
     }   
 
 }
