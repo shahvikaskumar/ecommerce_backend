@@ -5,6 +5,7 @@ const converttime = function (next) {
         const gmt530Offset = 5.5 * 60 * 60 * 1000;
         return new Date(date.getTime() + gmt530Offset);
     };
+    
 
     // If it's a new user, set createdAt timestamp and convert it to GMT+5:30 timezone
     if (this.isNew) {
