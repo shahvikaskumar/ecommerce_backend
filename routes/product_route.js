@@ -7,7 +7,7 @@ const Usertype = require("../middleware/usertype");
 
 
 router.post('/createproduct', requireauth, Usertype, uploadmiddleware, Productcreate);
-router.get('/allproducts', requireauth, Usertype, Productdetail);
+router.get('/allproducts', Productdetail);
 
 
 module.exports = router;
