@@ -78,12 +78,12 @@ const Allproduct = async (req, res) => {
 //#region Delete Product code
 const Deleteproduct = async (req,res) => {
     try{
-        const product = await productmodel.findById(req.params.pid);
+        const product = await productmodel.findById({_id:req.params.pid});
         if(!product){
             return res.status(404).json({success:'Product not found'});
         }
 
-        await product.remove();
+        await product.deleteOne();
         res.status(200).json({success:"Product deleted successfully."});
     }
     catch(err){
