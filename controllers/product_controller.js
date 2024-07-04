@@ -40,7 +40,7 @@ const Productdetail = async (req, res) => {
 
         const pwithimgpath = products.map(product => ({
             ...product._doc,
-            image:product.image ? baseurl + ".netlify/functions/index/" + product.image.replace(/\\/g, '/') : null,
+            image:product.image ? baseurl + product.image.replace(/\\/g, '/') : null,
         }));
         res.status(200).json(pwithimgpath);
     }
