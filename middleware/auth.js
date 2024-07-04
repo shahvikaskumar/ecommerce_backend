@@ -1,5 +1,5 @@
 const jwt=require('jsonwebtoken');
-const { JWT_SECRET } = require('../Utility/config');
+const { JWT_SECRET } = require('../utility/config');
 const mongoose = require("mongoose");
 const usermodel = mongoose.model("user");
 
@@ -22,8 +22,9 @@ const requireauth= async (req,res,next) => {
         if(!user){
             return res.status(401).json({error:"User not found"});
         }
-
+        
         req.userID=user;
+        
         // Call the next middleware function
         next();
     }

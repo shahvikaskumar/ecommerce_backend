@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const usermodel= mongoose.model('user');
 const jwt = require('jsonwebtoken');
 const bcryptjs = require('bcryptjs');
-const { JWT_SECRET, Fronturl } = require('../Utility/config');
+const { JWT_SECRET, Fronturl } = require('../utility/config');
 const { Sendmail } = require('../Utility/nodemailer');
 const crypto = require('crypto');
 
