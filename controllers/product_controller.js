@@ -26,7 +26,7 @@ const Productcreate = async (req,res) => {
     });
 
         await product.save();
-        res.status(200).json({success:"Product created successfully.",product:product});
+        res.status(200).json({success:"Product created successfully."});
     }
     catch (err){
         console.error(err);
