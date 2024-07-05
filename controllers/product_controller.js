@@ -7,16 +7,16 @@ const path = require('path');
 const Productcreate = async (req,res) => {
     try{
         
-        const baseurl = `${req.protocol}://${req.get('host')}/`;
+        // const baseurl = `${req.protocol}://${req.get('host')}/`;
         const { brand, cate, color, pfeatured , pdesc, pname, price, pspeci, subcate } = req.body;
-        const image = req.file ? `${baseurl}${req.file.path.replace(/\\/g, '/')}` : '';       
+        // const image = req.file ? `${baseurl}${req.file.path.replace(/\\/g, '/')}` : '';       
         // const image = req.file ? req.file.path : '';       
 
         const product = new productmodel({
             brand,
             cate,
             color,
-            image,
+            // image,
             pfeatured,
             pdesc,
             pname,
