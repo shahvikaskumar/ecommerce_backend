@@ -7,9 +7,9 @@ const path = require('path');
 const Productcreate = async (req,res) => {
     try{
         
-        const baseurl = `${req.protocol}://${req.get('host')}/`;
+        // const baseurl = `${req.protocol}://${req.get('host')}/`;
         const { brand, cate, color, pfeatured , pdesc, pname, price, pspeci, subcate } = req.body;
-        const image = req.file ? baseurl + req.file.path.replace(/\\/g, '/') : '';       
+        const image = req.file ? `https://arham-backendapi.netlify.app/${req.file.path.replace(/\\/g, '/')}` : '';       
         
 
         const product = new productmodel({
