@@ -2,12 +2,6 @@
 [build] 
   functions = "functions"
 
-[[headers]]
-  for = "/.netlify/functions/*"
-  [headers.values]
-    Access-Control-Allow-Origin = "*"
-    Access-Control-Allow-Headers = "Content-Type, Authorization,cate,subcate"
-    Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
 
  
 
