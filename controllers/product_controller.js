@@ -1,13 +1,16 @@
 const mongoose = require("mongoose");
 const productmodel= mongoose.model('product');
+const fs = require('fs');
 
 //#region Create Product code
 const Productcreate = async (req,res) => {
     try{
         
+        const baseurl = `${req.protocol}://${req.get('host')}/`;
         const { brand, cate, color, pfeatured , pdesc, pname, price, pspeci, subcate } = req.body;
-        const image = req.file ? req.file.path : '';
+        const image = req.file ? baseurl + req.file.path.replace(/\\/g, '/') : '';       
         
+
         const product = new productmodel({
             brand,
             cate,
@@ -37,15 +40,8 @@ const Singleproduct = async (req, res) => {
         const product = await productmodel.findById(req.params.pid);
         if(!product){
             return res.status(404).json({success:"Product not found"});
-        } 
-
-        const baseurl = `${req.protocol}://${req.get('host')}/`;
-
-        const pwithimgpath = {
-            ...product._doc,
-            image:product.image ? baseurl + product.image.replace(/\\/g, '/') : null,
-        };
-        res.status(200).json({success:pwithimgpath});
+        }       
+        res.status(200).json({success:product});
     }
     catch(error){
         console.log(error);
@@ -59,14 +55,10 @@ const Allproduct = async (req, res) => {
 
     try{    
         const products = await productmodel.find();
-
-        const baseurl = `${req.protocol}://${req.get('host')}/`;
-
-        const pwithimgpath = products.map(product => ({
-            ...product._doc,
-            image:product.image ? baseurl + product.image.replace(/\\/g, '/') : null,
-        }));
-        res.status(200).json({success:pwithimgpath});
+        if(!products){
+            return res.status(404).json({success:"Products not found"});
+        }
+        res.status(200).json({success:products});
     }
     catch(err){
         console.error(err);
@@ -81,6 +73,12 @@ const Deleteproduct = async (req,res) => {
         const product = await productmodel.findById({_id:req.params.pid});
         if(!product){
             return res.status(404).json({success:'Product not found'});
+        }
+
+        if (product.image) {            
+            if (fs.existsSync(product.image)) {
+                fs.unlinkSync(product.image); 
+            }
         }
 
         await product.deleteOne();

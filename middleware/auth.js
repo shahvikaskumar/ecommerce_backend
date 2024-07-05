@@ -6,7 +6,7 @@ const usermodel = mongoose.model("user");
 // Middleware function to authenticate requests using JWT
 const requireauth= async (req,res,next) => {
     const {authorization} = req.headers;
-    
+    console.log(req.body);
     // If authorization header is missing, send a 401 Unauthorized response
     if(!authorization){
         return res.status(401).json({error:"Authorization header missing"});

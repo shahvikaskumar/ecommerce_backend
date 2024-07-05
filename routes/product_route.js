@@ -6,7 +6,7 @@ const uploadmiddleware = require("../utility/multer");
 const Usertype = require("../middleware/usertype");
 
 
-router.post('/product/create', requireauth, Usertype, uploadmiddleware, Productcreate);
+router.post('/product/create', requireauth, Usertype,  uploadmiddleware,  Productcreate);
 router.get('/product/all', Allproduct);
 router.delete("/product/delete/:pid",requireauth, Usertype,Deleteproduct);
 router.put("/product/update/:pid",requireauth, Usertype, uploadmiddleware, Updateproduct);
