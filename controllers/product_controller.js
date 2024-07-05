@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const productmodel= mongoose.model('product');
 const fs = require('fs');
+const path = require('path');
 
 //#region Create Product code
 const Productcreate = async (req,res) => {
@@ -75,9 +76,11 @@ const Deleteproduct = async (req,res) => {
             return res.status(404).json({success:'Product not found'});
         }
 
-        if (product.image) {            
-            if (fs.existsSync(product.image)) {
-                fs.unlinkSync(product.image); 
+        if (product.image) {
+            const imageurl = new URL(product.image);
+            const imagepath = path.join('.', imageurl.pathname);             
+            if (fs.existsSync(imagepath)) {
+                fs.unlinkSync(imagepath); 
             }
         }
 
@@ -94,13 +97,24 @@ const Deleteproduct = async (req,res) => {
 //#region Update Product code
 const Updateproduct = async(req,res) => {
     try{
+        const baseurl = `${req.protocol}://${req.get('host')}/`;
         const { brand, cate, color, pfeatured , pdesc, pname, price, pspeci, subcate } = req.body;
-        const image = req.file ? req.file.path : '';
+        const image = req.file ? baseurl + req.file.path.replace(/\\/g, '/') : '';
         
         const product = await productmodel.findById(req.params.pid);
         if(!product){
             res.status(404).json({success:"Product not found"});
         }
+
+        if (product.image) {
+            const imageurl = new URL(product.image);
+            const imagepath = path.join('.', imageurl.pathname);             
+            if (fs.existsSync(imagepath)) {
+                fs.unlinkSync(imagepath); 
+            }
+        };
+
+
 
         product.brand = brand || product.brand;
         product.cate = cate || product.cate;
@@ -126,4 +140,3 @@ const Updateproduct = async(req,res) => {
 
 
 module.exports = {Productcreate, Allproduct, Deleteproduct, Updateproduct, Singleproduct};
-

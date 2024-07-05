@@ -48,10 +48,9 @@ const upload  = multer({
 
 
 const uploadmiddleware = async (req, res, next) => {
-    upload(req ,res, (err) => {
-        
+    upload(req ,res, (err) => {        
         if(err){
-            return res.status(400).json({success:"unsuccess"});
+            return res.status(400).json({success:err.response?.data?.error});
         }
         next();        
 });

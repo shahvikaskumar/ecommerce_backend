@@ -1,6 +1,6 @@
 const express = require("express");
 const router=express.Router();
-const { Allproduct, Productcreate, Deleteproduct, Updateproduct, Singleproduct } = require('../controllers/product_controller');
+const { Allproduct, Productcreate, Deleteproduct, Updateproduct, Singleproduct} = require('../controllers/product_controller');
 const requireauth = require("../middleware/auth");
 const uploadmiddleware = require("../utility/multer");
 const Usertype = require("../middleware/usertype");
