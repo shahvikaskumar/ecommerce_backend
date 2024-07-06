@@ -1,49 +1,60 @@
-const fs = require('fs/promises'); // Using promises for fs operations
+const multer = require('multer');
 const path = require('path');
-const Busboy = require('busboy');
+const fs = require('fs');
 
 // Function to ensure directory exists
-const ensureDirExists = async (dir) => {
-  if (!fs.existsSync(dir)) {
-    await fs.mkdir(dir, { recursive: true });
-  }
+const ensuredirexists = (dir) => {
+    if(!fs.existsSync(dir)){
+        fs.mkdirSync(dir,{recursive:true});
+    }
 };
 
 // Check file type
-function checkFileType(filename) {
-  const filetypes = /jpeg|jpg|png/;
-  const extname = filetypes.test(path.extname(filename).toLowerCase());
-  return extname;
-}
+function checkfiletype(file, cb){
+    const filetypes = /jpeg|jpg|png/;
+    const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
 
-async function uploadmiddleware(req, res, next) {
-  const { cate, subcate } = req.headers;
-  const imgDir = `./images/products/${cate}/${subcate}`; // Corrected
+    const mimetype = filetypes.test(file.mimetype);
 
-  await ensureDirExists(imgDir);
-
-  const busboy = new Busboy({ headers: req.headers });
-  let imgdata = null;
-
-  busboy.on('file', async (fieldname, file, filename, encoding, mimetype) => {
-    if (!checkFileType(filename)) {
-      return res.status(400).json({ success: 'Error: Images Only!' });
+    if(mimetype && extname){
+        return cb(null, true);
     }
-    console.log(filename);
-    imgdata = path.join(imgDir, `img-${Date.now()}-${filename}`);
-    await file.pipe(fs.createWriteStream(imgdata));
-  });
+    else {
+        cb('Error: Images Only!');
+    }
+};    
 
-  busboy.on('finish', () => {
-    res.status(200).json({ message: imgdata }); // Assuming success response
-  });
+// Set up storage engine
+const storage = multer.diskStorage({
+    destination:(req, file,cb) => {
+        const {cate,subcate} = req.headers;        
+        const imgdir = `./images/products/${cate}/${subcate}`;
+        ensuredirexists(imgdir);
+        cb(null,imgdir);
+    },
+    filename:(req, file, cb) => {        
+        cb(null,'img-' + Date.now()  + "-" + file.originalname);
+    }
+});
 
-  busboy.on("error", (err) => {
-    console.error(err);
-    res.status(400).json({ message: err.message });
-  });
+// Initialize upload
+const upload  = multer({
+    storage:storage,        
+    limits:{ fileSize:1000000},
+    fileFilter: (req,file, cb) => {            
+        checkfiletype(file, cb);
+    }
+}).single('image');
 
-  await req.body.pipe(busboy);
+
+const uploadmiddleware = async (req, res, next) => {
+  upload(req ,res, (err) => {
+        if(err){
+            return res.status(400).json({success:err.message});
+        }
+        next();
+});
+    
 }
 
 module.exports = uploadmiddleware;
