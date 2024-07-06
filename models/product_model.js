@@ -43,7 +43,11 @@ const productschema = new mongoose.Schema({
         
     },
 
-    image:{
+    imagepath:{
+        type:String,
+    },
+
+    imageurl:{
         type:String,        
     },
 
