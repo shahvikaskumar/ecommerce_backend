@@ -11,7 +11,7 @@ const Productcreate = async (req,res) => {
         return res.status(400).json({ error: 'No file uploaded' });
     }
 
-    const publicDir = path.join(__dirname, 'public');
+    const publicDir = path.join(__dirname, 'public','upload');
     const file = req.file;    
     const dirPath = path.join(publicDir, 'image' ,'products', cate, subcate);
     const filePath = path.join(dirPath, file.originalname);
