@@ -11,13 +11,13 @@ const Productcreate = async (req,res) => {
         return res.status(400).json({ error: 'No file uploaded' });
     }
 
-    const publicDir = path.join(__dirname, 'public', 'image');
+    const publicDir = path.join(__dirname, 'public');
     const file = req.file;    
-    const dirPath = path.join(publicDir, 'products', cate, subcate);
+    const dirPath = path.join(publicDir, 'image' ,'products', cate, subcate);
     const filePath = path.join(dirPath, file.originalname);
 
 
-    fs.access('/tmp', fs.constants.W_OK, (err) => {
+    fs.access(publicDir, fs.constants.W_OK, (err) => {
         if (err) {
             console.error('No write access to /tmp directory:', err);
             return res.status(500).json({ error: 'No write access to /tmp directory' });
