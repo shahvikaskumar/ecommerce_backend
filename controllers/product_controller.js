@@ -11,10 +11,11 @@ const Productcreate = async (req,res) => {
         return res.status(400).json({ error: 'No file uploaded' });
     }
 
-    
+    const publicDir = path.join(__dirname, 'public', 'image');
     const file = req.file;    
-    const dirPath = path.join('/tmp', 'images','products', cate, subcate);
+    const dirPath = path.join(publicDir, 'products', cate, subcate);
     const filePath = path.join(dirPath, file.originalname);
+
 
     fs.access('/tmp', fs.constants.W_OK, (err) => {
         if (err) {
@@ -37,7 +38,7 @@ const Productcreate = async (req,res) => {
                 }
     
                 
-                const publicUrl = `/.netlify/large-media/images/products/${cate}/${subcate}/${file.originalname}`;
+                const publicUrl = `/images/products/${cate}/${subcate}/${file.originalname}`;
                 console.log('File uploaded:', publicUrl);
                 res.status(200).json({
                     message: 'File uploaded successfully',
