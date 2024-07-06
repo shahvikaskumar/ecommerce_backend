@@ -14,7 +14,7 @@ const Productcreate = async (req,res) => {
     
     const file = req.file;
     const filePath = path.join('/tmp', file.originalname);
-
+    let publicUrl=null;
     
 
     fs.access('/tmp', fs.constants.W_OK, (err) => {
@@ -31,44 +31,40 @@ const Productcreate = async (req,res) => {
             }
 
             
-            const publicUrl = `/.netlify/large-media/${file.originalname}`;
-            console.log('File uploaded:', publicUrl);
-            res.status(200).json({
-                message: 'File uploaded successfully',
-                url: publicUrl
-            });
+            publicUrl = `/.netlify/functions/index/images/${file.originalname}`;
+            
         });
     });
 
 
     
-    // try{
+    try{
         
-    //     const baseurl = `${req.protocol}://${req.get('host')}/`;
-    //     const { brand, cate, color, pfeatured , pdesc, pname, price, pspeci, subcate } = req.body;
-    //     const image = req.file ? `${baseurl}${req.file.path.replace(/\\/g, '/')}` : '';       
-    //     // const image = req.file ? req.file.path : '';       
+        const baseurl = `${req.protocol}://${req.get('host')}/`;
+        const { brand, cate, color, pfeatured , pdesc, pname, price, pspeci, subcate } = req.body;
+        const image = publicUrl;     
+               
 
-    //     const product = new productmodel({
-    //         brand,
-    //         cate,
-    //         color,
-    //         image,
-    //         pfeatured,
-    //         pdesc,
-    //         pname,
-    //         price,
-    //         pspeci,
-    //         subcate,
-    // });
+        const product = new productmodel({
+            brand,
+            cate,
+            color,
+            image,
+            pfeatured,
+            pdesc,
+            pname,
+            price,
+            pspeci,
+            subcate,
+    });
 
-    //     await product.save();
-    //     res.status(200).json({success:"Product created successfully.", product:product});
-    // }
-    // catch (err){
-    //     console.error(err);
-    //     res.status(500).json({error:"An error occurred during product creation."});
-    // }
+        await product.save();
+        res.status(200).json({success:"Product created successfully.", product:product});
+    }
+    catch (err){
+        console.error(err);
+        res.status(500).json({error:"An error occurred during product creation."});
+    }
 };
 //#endregion
 
