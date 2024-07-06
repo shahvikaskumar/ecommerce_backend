@@ -2,36 +2,58 @@ const mongoose = require("mongoose");
 const productmodel= mongoose.model('product');
 const fs = require('fs');
 const path = require('path');
+const busboy = require("busboy");
 
 //#region Create Product code
 const Productcreate = async (req,res) => {
-    try{
-        
-        // const baseurl = `${req.protocol}://${req.get('host')}/`;
-        const { brand, cate, color, pfeatured , pdesc, pname, price, pspeci, subcate } = req.body;
-        // const image = req.file ? `${baseurl}${req.file.path.replace(/\\/g, '/')}` : '';       
-        // const image = req.file ? req.file.path : '';       
+    
+    let filename = "";
 
-        const product = new productmodel({
-            brand,
-            cate,
-            color,
-            // image,
-            pfeatured,
-            pdesc,
-            pname,
-            price,
-            pspeci,
-            subcate,
+    const bb = busboy({headers:req.headers});
+
+    bb.on('file',(name,file,info) => {
+        filename = info.filename;
+        const saveto = path.join(`./images/${filename}`);
+        console.log(saveto);
+        file.pipe(fs.createWriteStream(saveto));
     });
 
-        await product.save();
-        res.status(200).json({success:"Product created successfully.", product:product});
-    }
-    catch (err){
-        console.error(err);
-        res.status(500).json({error:"An error occurred during product creation."});
-    }
+    bb.on('close',() => {
+        console.log('image uploaded');
+    });
+
+    req.pipe(bb);
+
+    
+
+    
+    // try{
+        
+    //     const baseurl = `${req.protocol}://${req.get('host')}/`;
+    //     const { brand, cate, color, pfeatured , pdesc, pname, price, pspeci, subcate } = req.body;
+    //     const image = req.file ? `${baseurl}${req.file.path.replace(/\\/g, '/')}` : '';       
+    //     // const image = req.file ? req.file.path : '';       
+
+    //     const product = new productmodel({
+    //         brand,
+    //         cate,
+    //         color,
+    //         image,
+    //         pfeatured,
+    //         pdesc,
+    //         pname,
+    //         price,
+    //         pspeci,
+    //         subcate,
+    // });
+
+    //     await product.save();
+    //     res.status(200).json({success:"Product created successfully.", product:product});
+    // }
+    // catch (err){
+    //     console.error(err);
+    //     res.status(500).json({error:"An error occurred during product creation."});
+    // }
 };
 //#endregion
 
