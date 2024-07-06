@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const productmodel= mongoose.model('product');
 const fs = require('fs');
 const path = require('path');
-const { Cname, Capikey, Capisecret } = require("../utility/config");
+const { Cname, Capikey, Capisecret } = require("../Utility/config");
 const cloudinary = require('cloudinary').v2;
 
 cloudinary.config({ 
@@ -84,7 +84,9 @@ const Deleteproduct = async (req,res) => {
             return res.status(404).json({success:'Product not found'});
         }
         
+        if (product.imagepath && typeof product.imagepath === 'string' && product.imagepath.trim() !== '') {
         await cloudinary.uploader.destroy(product.imagepath);
+        }
 
         await product.deleteOne();
         res.status(200).json({success:"Product deleted successfully."});
@@ -104,11 +106,13 @@ const Updateproduct = async(req,res) => {
         const image = req.file ? req.file.path : '';
         
         const product = await productmodel.findById(req.params.pid);
-        if(!product){
+        if (product.imagepath && typeof product.imagepath === 'string' && product.imagepath.trim() !== '') {
             res.status(404).json({success:"Product not found"});
         }
 
+        if(product.imagepath){
         await cloudinary.uploader.destroy(product.imagepath);
+        }
 
         product.brand = brand || product.brand;
         product.cate = cate || product.cate;
