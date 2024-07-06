@@ -6,65 +6,76 @@ const path = require('path');
 
 //#region Create Product code
 const Productcreate = async (req,res) => {
-    
+    const {cate , subcate} = req.headers;
     if (!req.file) {
         return res.status(400).json({ error: 'No file uploaded' });
     }
 
     
-    const file = req.file;
-    const filePath = path.join('/tmp', file.originalname);
-    let publicUrl=null;
-    
+    const file = req.file;    
+    const dirPath = path.join('/tmp', 'images','products', cate, subcate);
+    const filePath = path.join(dirPath, file.originalname);
 
     fs.access('/tmp', fs.constants.W_OK, (err) => {
         if (err) {
             console.error('No write access to /tmp directory:', err);
             return res.status(500).json({ error: 'No write access to /tmp directory' });
         }
-
+    
         
-        fs.writeFile(filePath, file.buffer, (err) => {
+        fs.mkdir(dirPath, { recursive: true }, (err) => {
             if (err) {
-                console.error('Failed to save file:', err);
-                return res.status(500).json({ error: 'Failed to save file', details: err.message });
+                console.error('Failed to create directory:', err);
+                return res.status(500).json({ error: 'Failed to create directory', details: err.message });
             }
-
+    
             
-            publicUrl = `/.netlify/functions/index/images/${file.originalname}`;
-            
+            fs.writeFile(filePath, file.buffer, (err) => {
+                if (err) {
+                    console.error('Failed to save file:', err);
+                    return res.status(500).json({ error: 'Failed to save file', details: err.message });
+                }
+    
+                
+                const publicUrl = `/.netlify/large-media/images/products/${cate}/${subcate}/${file.originalname}`;
+                console.log('File uploaded:', publicUrl);
+                res.status(200).json({
+                    message: 'File uploaded successfully',
+                    url: publicUrl
+                });
+            });
         });
     });
 
 
     
-    try{
+    // try{
         
-        const baseurl = `${req.protocol}://${req.get('host')}/`;
-        const { brand, cate, color, pfeatured , pdesc, pname, price, pspeci, subcate } = req.body;
-        const image = publicUrl;     
-               
+    //     const baseurl = `${req.protocol}://${req.get('host')}/`;
+    //     const { brand, cate, color, pfeatured , pdesc, pname, price, pspeci, subcate } = req.body;
+    //     const image = publicUrl;     
+    //     const image = req.file ? req.file.path : '';       
 
-        const product = new productmodel({
-            brand,
-            cate,
-            color,
-            image,
-            pfeatured,
-            pdesc,
-            pname,
-            price,
-            pspeci,
-            subcate,
-    });
+    //     const product = new productmodel({
+    //         brand,
+    //         cate,
+    //         color,
+    //         image,
+    //         pfeatured,
+    //         pdesc,
+    //         pname,
+    //         price,
+    //         pspeci,
+    //         subcate,
+    // });
 
-        await product.save();
-        res.status(200).json({success:"Product created successfully.", product:product});
-    }
-    catch (err){
-        console.error(err);
-        res.status(500).json({error:"An error occurred during product creation."});
-    }
+    //     await product.save();
+    //     res.status(200).json({success:"Product created successfully.", product:product});
+    // }
+    // catch (err){
+    //     console.error(err);
+    //     res.status(500).json({error:"An error occurred during product creation."});
+    // }
 };
 //#endregion
 

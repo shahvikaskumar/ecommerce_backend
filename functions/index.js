@@ -14,7 +14,7 @@ const port=5000;
 app.use(cors());
 
 app.use(express.json());
-app.use('/.netlify/functions/index/images', express.static('images'));
+app.use('/.netlify/large-media/images', express.static('images'));
 
 
 app.use('/.netlify/functions/index', authroutes);
