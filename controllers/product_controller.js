@@ -126,7 +126,7 @@ const Updateproduct = async(req,res) => {
         product.pspeci = pspeci || product.pspeci;
 
         await product.save();
-        res.status(200).json({success:"Product updated successfully."});
+        res.status(200).json({success:"Product updated successfully.", product:product});
 
     }
     catch(err){
