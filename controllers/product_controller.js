@@ -103,8 +103,9 @@ const Updateproduct = async(req,res) => {
     try{
         
         const { brand, cate, color, pfeatured , pdesc, pname, price, pspeci, subcate } = req.body;
-        const image = req.file ? req.file.path : '';
-        
+        const imageurl = req.file ? req.file.path : '';
+        const imagepath = req.file ? req.file.filename : '';      
+
         const product = await productmodel.findById(req.params.pid);
         if (product.imagepath && typeof product.imagepath === 'string' && product.imagepath.trim() !== '') {
             res.status(404).json({success:"Product not found"});
@@ -118,7 +119,8 @@ const Updateproduct = async(req,res) => {
         product.cate = cate || product.cate;
         product.subcate = subcate || product.subcate;
         product.color = color || product.color;
-        product.image = image || product.image;
+        product.imageurl = imageurl || product.imageurl;
+        product.imagepath = imagepath || product.imagepath;
         product.pfeatured = pfeatured || product.pfeatured;
         product.pdesc = pdesc || product.pdesc;
         product.pname = pname || product.pname;
