@@ -107,11 +107,11 @@ const Updateproduct = async(req,res) => {
         const imagepath = req.file ? req.file.filename : '';      
 
         const product = await productmodel.findById(req.params.pid);
-        if (product.imagepath && typeof product.imagepath === 'string' && product.imagepath.trim() !== '') {
+        if (!product) {
             res.status(404).json({success:"Product not found"});
         }
 
-        if(product.imagepath){
+        if(product.imagepath && typeof product.imagepath === 'string' && product.imagepath.trim() !== '') {
         await cloudinary.uploader.destroy(product.imagepath);
         }
 
