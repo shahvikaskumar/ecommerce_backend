@@ -67,6 +67,17 @@ const productschema = new mongoose.Schema({
         }
     ],
 
+    pavgrating:{
+        type:Number,
+        default:0
+
+    },
+
+    pcountrating:{
+        type:Number,
+        default:0
+    },
+
 }, { timestamps: true });
 
 productschema.pre('save',converttime);

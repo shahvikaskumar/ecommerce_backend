@@ -12,6 +12,19 @@ cloudinary.config({
   });
 
 
+const calculateAverageRating = (ratingsArray) => {
+    if (!ratingsArray || ratingsArray.length === 0) {
+      return { averageRating: 0, count: 0 }; // Handle case with no ratings or undefined ratingsArray
+    }
+  
+    const totalRating = ratingsArray.reduce((sum, rating) => sum + rating.ratingno, 0);
+    const averageRating = totalRating / ratingsArray.length;
+  
+    return { averageRating, count: ratingsArray.length };
+};
+
+
+
 //#region Create Product code
 const Productcreate = async (req,res) => {
     try{               
@@ -161,6 +174,11 @@ const Productrating = async (req, res) => {
             product.pratings.push({ user: uid, ratingno });
         }
 
+        const { averageRating, count } = calculateAverageRating(product.pratings);
+
+        product.pavgrating.push=averageRating;
+        product.pcountrating.push=count;
+
         // Save the updated product
         await product.save();
 
@@ -171,5 +189,7 @@ const Productrating = async (req, res) => {
     }
 };
 //#endregion
+
+
 
 module.exports = {Productcreate,Productrating, Allproduct, Deleteproduct, Updateproduct, Singleproduct};
