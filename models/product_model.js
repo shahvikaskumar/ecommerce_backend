@@ -51,6 +51,22 @@ const productschema = new mongoose.Schema({
         type:String,        
     },
 
+    pratings: [
+        {
+            user: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User',
+                
+            },
+            ratingno: {
+                type: Number,
+                min: 1,
+                max: 5,
+            
+            }
+        }
+    ],
+
 }, { timestamps: true });
 
 productschema.pre('save',converttime);

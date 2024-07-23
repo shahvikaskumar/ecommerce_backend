@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const productmodel= mongoose.model('product');
 const fs = require('fs');
 const path = require('path');
-const { Cname, Capikey, Capisecret } = require("../Utility/config");
+const { Cname, Capikey, Capisecret } = require("../utility/config");
 const cloudinary = require('cloudinary').v2;
 
 cloudinary.config({ 
@@ -138,5 +138,38 @@ const Updateproduct = async(req,res) => {
 };
 //#endregion
 
+//#region Product rating code
+const Productrating = async (req, res) => {
+    try {
+        const { uid, ratingno } = req.body;
+        const productId = req.params.pid;
 
-module.exports = {Productcreate, Allproduct, Deleteproduct, Updateproduct, Singleproduct};
+        // Find the product by its ID
+        const product = await productmodel.findById(productId);
+        if (!product) {
+            return res.status(404).json({ success: false, message: "Product not found" });
+        }
+
+        // Check if the user has already rated the product
+        const existingRatingIndex = product.pratings.findIndex(rating => rating.user.toString() === uid);
+
+        if (existingRatingIndex !== -1) {
+            // Update the existing rating
+            product.pratings[existingRatingIndex].ratingno = ratingno;
+        } else {
+            // Add a new rating
+            product.pratings.push({ user: uid, ratingno });
+        }
+
+        // Save the updated product
+        await product.save();
+
+        res.status(200).json({ success: true, message: "Product rating updated successfully" });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ error: "An error occurred applying the product rating." });
+    }
+};
+//#endregion
+
+module.exports = {Productcreate,Productrating, Allproduct, Deleteproduct, Updateproduct, Singleproduct};

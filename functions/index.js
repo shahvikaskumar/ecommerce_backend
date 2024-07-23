@@ -7,6 +7,7 @@ const serverless = require('serverless-http');
 
 const userroutes = require('../routes/user_route');
 const productroutes = require('../routes/product_route');
+const paymentroutes = require('../routes/payment_route');
 // const tweetroutes = require('./routes/tweet_route');
 const app=express();
 const port=5000;
@@ -18,6 +19,7 @@ app.use(express.json());
 app.use('/.netlify/functions/index', authroutes);
 app.use('/.netlify/functions/index', userroutes);
 app.use('/.netlify/functions/index', productroutes);
+app.use('/.netlify/functions/index', paymentroutes);
 // app.use('/api',userroutes);
 
 const startserver = async   () => {

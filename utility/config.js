@@ -9,6 +9,8 @@ module.exports = {
     Cname:process.env.Cname,
     Capikey:process.env.Capikey,
     Capisecret:process.env.Capisecret,
-    Capienvvar:process.env.Capienvvar
+    Capienvvar:process.env.Capienvvar,
+    Rakeyid:process.env.Rakeyid,
+    Rakeysecret:process.env.Rakeysecret
 
 };
