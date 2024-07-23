@@ -12,5 +12,5 @@ router.get('/product/all', Allproduct);
 router.delete("/product/delete/:pid",requireauth, Usertype,Deleteproduct);
 router.put("/product/update/:pid",requireauth, Usertype, upload, Updateproduct);
 router.get('/product/:pid', Singleproduct );
-router.post('/product/rating/:pid',requireauth, Productrating);
+router.put('/product/rating/:pid',requireauth, Productrating);
 module.exports = router;
