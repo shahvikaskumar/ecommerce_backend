@@ -164,7 +164,7 @@ const Productrating = async (req, res) => {
         // Save the updated product
         await product.save();
 
-        res.status(200).json({ success: true, message: "Product rating updated successfully" });
+        res.status(200).json({success: "Product rating updated successfully", product:product});
     } catch (err) {
         console.log(err);
         res.status(500).json({ error: "An error occurred applying the product rating." });
