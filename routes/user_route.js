@@ -7,7 +7,7 @@ const Usertype = require("../middleware/usertype");
 
 
 router.get('/user/:id', Userdetail);
-router.get('/users/all', Getalluser);
+router.get('/users/all',requireauth, Usertype, Getalluser);
 router.put("/user/update/:uid",requireauth, upload, Updateuserdetail);
 
 module.exports = router;
