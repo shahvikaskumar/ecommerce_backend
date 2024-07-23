@@ -176,8 +176,8 @@ const Productrating = async (req, res) => {
 
         const { averageRating, count } = calculateAverageRating(product.pratings);
 
-        product.pavgrating.push=averageRating;
-        product.pcountrating.push=count;
+        product.pavgrating=averageRating;
+        product.pcountrating=count;
 
         // Save the updated product
         await product.save();
