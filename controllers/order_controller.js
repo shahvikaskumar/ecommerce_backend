@@ -10,7 +10,7 @@ const Createneworder = async(req, res) => {
         res.status(200).json({success:"Order succesfully Placed." , data:neworder});
     }
     catch(error){
-        console.error(err);
+        console.error(error);
         res.status(500).json({error:"An error occurred during Order creation."});
     }
     
@@ -40,7 +40,7 @@ const Updateorder = async(req,res) => {
 
     }
     catch(error){
-        console.error(err);
+        console.error(error);
         res.status(500).json({error:"An error occurred during Order updation."});
     }
 };
@@ -52,7 +52,7 @@ const Getuserorder = async(req,res) => {
         res.status(200).json({success:"Order received.", data:orders});
     }
     catch(error){
-        console.error(err);
+        console.error(error);
         res.status(500).json({error:"An error occurred during Get order."});
     }
 };
@@ -63,7 +63,7 @@ const Getallorder = async() => {
         res.status(200).json({success:"all order received.", data:orders});       
     }
     catch(error){
-        console.error(err);
+        console.error(error);
         res.status(500).json({error:"An error occurred during Get all order."});
     }
 };
