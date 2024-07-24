@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const {MONGODB_URL} = require('./config');
 const user = require('../models/user_model');
 const products = require('../models/product_model');
+const order = require('../models/order_model');
 // const tweet = require('../models/tweet_model');
 
 // Function to connect to MongoDB Database
@@ -12,7 +13,8 @@ const connectdb = async () => {
         console.log("Database connection successfully");
          user;
          products;
-        // tweet;
+         order;
+        
     }
     catch (error){
         if(error.name === 'MongooseServerSelectionError'){

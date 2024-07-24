@@ -18,7 +18,7 @@ const calculateAverageRating = (ratingsArray) => {
     }
   
     const totalRating = ratingsArray.reduce((sum, rating) => sum + rating.ratingno, 0);
-    const averageRating = totalRating / ratingsArray.length;
+    const averageRating = Math.round((totalRating / ratingsArray.length) * 10) / 10;
   
     return { averageRating, count: ratingsArray.length };
 };

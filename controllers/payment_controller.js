@@ -1,6 +1,7 @@
 const Razorpay = require('razorpay');
 const { Rakeyid, Rakeysecret } = require('../utility/config');
 const crypto = require('crypto');
+const shortid = require('shortid');
 
 const razorpay = new Razorpay({
     key_id:Rakeyid,
@@ -9,17 +10,17 @@ const razorpay = new Razorpay({
 
 
 const Createorder = async (req,res) => {
-    const {amount , currency,receipt} = req.body;
-
+    const {amount} = req.body;
+    
     const options = {
         amount:amount*100,
-        currency,
-        receipt
+        currency:'INR',
+        receipt:shortid.generate(),
     };
 
     try {
         const order = await razorpay.orders.create(options);
-        res.json(order);
+        res.status(200).json({success:"Order Created Succesfully", order:order});
     }
     catch (error){
         res.status(500).json(error);
