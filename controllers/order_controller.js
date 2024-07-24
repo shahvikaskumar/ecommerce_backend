@@ -5,7 +5,7 @@ const Createneworder = async(req, res) => {
     try{
 
         const {userid,items,totalcost,shipingcost,totalamount,status,payorderid,payid,paysignature, paystatus} = req.body;
-        const neworder = new ordermodal({userid,items,totalcost,shipingcost,totalamount,status,payorderid,payid,paysignature, paystatus});
+        const neworder = new ordermodel({userid,items,totalcost,shipingcost,totalamount,status,payorderid,payid,paysignature, paystatus});
         await neworder.save();
         res.status(200).json({success:"Order succesfully Placed." , data:neworder});
     }
@@ -48,7 +48,7 @@ const Updateorder = async(req,res) => {
 const Getuserorder = async(req,res) => {
     try{
         const {userid} = req.params;
-        const orders = await ordermodel.find({userid:userid}).populate('items.product');
+        const orders = await ordermodel.find({userid:userid}).populate('items.productid');
         res.status(200).json({success:"Order received.", data:orders});
     }
     catch(error){
@@ -57,9 +57,9 @@ const Getuserorder = async(req,res) => {
     }
 };
 
-const Getallorder = async() => {
+const Getallorder = async(req,res) => {
     try{
-        const orders = await ordermodel.find().populate('userid items.product');
+        const orders = await ordermodel.find().populate('userid items.productid');
         res.status(200).json({success:"all order received.", data:orders});       
     }
     catch(error){

@@ -8,8 +8,8 @@ const Usertype = require("../middleware/usertype");
 
 router.post('/order/createorder', requireauth, Createneworder  );
 router.get('/order/getorder/:userid', requireauth ,Getuserorder);
-router.get('/order/getorder', requireauth, Usertype ,Getallorder);
-router.put('/order/update/:oid', requireauth, Usertype, Updateorder);
+router.get('/order/getallorder', requireauth, Usertype ,Getallorder);
+router.put('/order/updateorder/:oid', requireauth, Usertype, Updateorder);
 
 module.exports = router;
 
