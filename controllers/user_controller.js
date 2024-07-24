@@ -44,7 +44,7 @@ const Userdetail = async (req,res) => {
 const Getalluser = async(req,res) => {
     try {
         // Fetch all users excluding those with usertype 'admin'
-        const users = await usermodel.find({ usertype: { $ne: 'admin' } }).select('_id name mobileno email profile_picurl address');
+        const users = await usermodel.find({ usertype: { $ne: 'admin' } }).select('_id name mobileno email profile_picurl address createdAt');
 
         // Check if there are users
         if (users.length === 0) {
