@@ -4,8 +4,8 @@ const ordermodel= mongoose.model('order');
 const Createneworder = async(req, res) => {
     try{
 
-        const {userid,items,totalamount,status,payorderid,payid,paysignature, paystatus} = req.body;
-        const neworder = new ordermodal({userid,items,totalamount,status,payorderid,payid,paysignature, paystatus});
+        const {userid,items,totalcost,shipingcost,totalamount,status,payorderid,payid,paysignature, paystatus} = req.body;
+        const neworder = new ordermodal({userid,items,totalcost,shipingcost,totalamount,status,payorderid,payid,paysignature, paystatus});
         await neworder.save();
         res.status(200).json({success:"Order succesfully Placed." , data:neworder});
     }
@@ -18,7 +18,7 @@ const Createneworder = async(req, res) => {
 
 const Updateorder = async(req,res) => {
     try{
-        const {userid,items,totalamount,status,payorderid,payid,paysignature, paystatus} = req.body;        
+        const {userid,items,totalcost,shipingcost ,totalamount,status,payorderid,payid,paysignature, paystatus} = req.body;        
         const order = await ordermodel.findById(req.params.oid);
         if (!order) {
             res.status(404).json({success:"Order not found"});
@@ -26,6 +26,8 @@ const Updateorder = async(req,res) => {
 
         order.userid = userid || order.userid;
         order.items = items || order.items;
+        order.totalcost = totalcost || order.totalcost;
+        order.shipingcost = shipingcost || order.shipingcost;
         order.totalamount = totalamount || order.totalamount;
         order.status = status || order.status;
         order.payorderid = payorderid || order.payorderid;

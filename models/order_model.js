@@ -27,6 +27,16 @@ const orderschema = new mongoose.Schema({
         },
     ],
 
+    totalcost:{
+        type:Number,
+        required:true,
+    },
+
+    shipingcost:{
+        type:Number,
+        required:true,
+    },
+
     totalamount:{
         type:Number,
         required:true
