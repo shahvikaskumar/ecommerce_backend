@@ -41,7 +41,8 @@ const userschema = new mongoose.Schema({
 
     address:{
         type:[Map],
-        of:String,        
+        of:String,
+              
     },
     
     vtoken:{

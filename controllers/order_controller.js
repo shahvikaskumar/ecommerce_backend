@@ -47,8 +47,10 @@ const Updateorder = async(req,res) => {
 
 const Getuserorder = async(req,res) => {
     try{
-        const {userid} = req.params;
-        const orders = await ordermodel.find({userid:userid}).populate('items.productid');
+        const {userid} = req.params;        
+        const orders = await ordermodel.find({userid:userid})
+            .populate({path:'userid' , select:'-password'})
+            .populate({path:items.productid}).exex();
         res.status(200).json({success:"Order received.", data:orders});
     }
     catch(error){
@@ -59,7 +61,9 @@ const Getuserorder = async(req,res) => {
 
 const Getallorder = async(req,res) => {
     try{
-        const orders = await ordermodel.find().populate('userid items.productid');
+        const orders = await ordermodel.find()
+            .populate({path:'userid' , select:'-password'})
+            .populate({path:items.productid}).exex();
         res.status(200).json({success:"all order received.", data:orders});       
     }
     catch(error){

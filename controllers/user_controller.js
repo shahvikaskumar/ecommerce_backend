@@ -68,8 +68,8 @@ const Updateuserdetail = async(req,res) => {
         const profile_picpath = req.file ? req.file.filename : '';
         
         const userin= await usermodel.findById(req.params.uid);
-        if (!product) {
-            res.status(404).json({success:"Product not found"});
+        if (!userin) {
+            res.status(404).json({success:"User not found"});
         }
 
         if(userin.profile_picpath && typeof userin.profile_picpath === 'string' && userin.profile_picpath.trim() !== '') {
