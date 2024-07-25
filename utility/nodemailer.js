@@ -1,5 +1,5 @@
 const nodemailer = require('nodemailer');
-const {Email , Pass, Vurl} = require('../Utility/config');
+const {Email , Pass, Vurl} = require('../utility/config');
 
 
 const transporter = nodemailer.createTransport({

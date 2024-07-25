@@ -6,7 +6,6 @@ const { JWT_SECRET, Fronturl } = require('../utility/config');
 const { Sendmail } = require('../Utility/nodemailer');
 const crypto = require('crypto');
 
-
 //#region Auth Register api
 const Authregister = async (req,res) => {
     const {fname, mobileno, email,password, utype}= req.body;
@@ -173,8 +172,6 @@ const Resetpassword = async (req,res) => {
     
 };
 //#endregion
-
-
 
 
 module.exports = {Authregister, Authlogin, Authverify, Authverifyemail, Forgotpassword, Resetpassword};

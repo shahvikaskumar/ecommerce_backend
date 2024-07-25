@@ -5,7 +5,7 @@ const requireauth = require("../middleware/auth");
 const upload = require("../utility/multer");
 const Usertype = require("../middleware/usertype");
 
-
+// Product Regarding routes
 
 router.post('/product/create', requireauth, Usertype , upload, Productcreate);
 router.get('/product/all', Allproduct);

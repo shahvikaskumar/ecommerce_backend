@@ -11,7 +11,7 @@ cloudinary.config({
     api_secret: Capisecret
   });
 
-
+//#region Calculating Average Rating
 const calculateAverageRating = (ratingsArray) => {
     if (!ratingsArray || ratingsArray.length === 0) {
       return { averageRating: 0, count: 0 }; // Handle case with no ratings or undefined ratingsArray
@@ -22,8 +22,7 @@ const calculateAverageRating = (ratingsArray) => {
   
     return { averageRating, count: ratingsArray.length };
 };
-
-
+//#endregion
 
 //#region Create Product code
 const Productcreate = async (req,res) => {
@@ -189,7 +188,5 @@ const Productrating = async (req, res) => {
     }
 };
 //#endregion
-
-
 
 module.exports = {Productcreate,Productrating, Allproduct, Deleteproduct, Updateproduct, Singleproduct};

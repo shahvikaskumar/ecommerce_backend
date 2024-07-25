@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const ordermodel= mongoose.model('order');
 
+//#region  Create new Order
 const Createneworder = async(req, res) => {
     try{
 
@@ -15,7 +16,9 @@ const Createneworder = async(req, res) => {
     }
     
 };
+//#endregion
 
+//#region  Update order 
 const Updateorder = async(req,res) => {
     try{
         const {userid,items,totalcost,shipingcost ,totalamount,status,payorderid,payid,paysignature, paystatus} = req.body;        
@@ -44,7 +47,9 @@ const Updateorder = async(req,res) => {
         res.status(500).json({error:"An error occurred during Order updation."});
     }
 };
+//#endregion
 
+//#region Get Specific User Order
 const Getuserorder = async(req,res) => {
     try{
         const {userid} = req.params;        
@@ -58,7 +63,9 @@ const Getuserorder = async(req,res) => {
         res.status(500).json({error:"An error occurred during Get order."});
     }
 };
+//#endregion
 
+//#region Get All order
 const Getallorder = async(req,res) => {
     try{
         const orders = await ordermodel.find()
@@ -71,5 +78,7 @@ const Getallorder = async(req,res) => {
         res.status(500).json({error:"An error occurred during Get all order."});
     }
 };
+//#endregion
+
 
 module.exports = { Createneworder, Updateorder, Getuserorder, Getallorder };

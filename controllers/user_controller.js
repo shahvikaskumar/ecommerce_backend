@@ -3,7 +3,6 @@ const usermodel= mongoose.model('user');
 const { Cname, Capikey, Capisecret } = require("../utility/config");
 const cloudinary = require('cloudinary').v2;
 
-
 cloudinary.config({ 
     cloud_name: Cname, 
     api_key: Capikey, 
@@ -38,7 +37,6 @@ const Userdetail = async (req,res) => {
     }
 };
 //#endregion
-
 
 //#region Get all user details excluding admin
 const Getalluser = async(req,res) => {

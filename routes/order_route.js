@@ -5,7 +5,7 @@ const { Createneworder, Getuserorder, Getallorder, Updateorder } = require("../c
 const Usertype = require("../middleware/usertype");
 
 
-
+// Order Regarding routes
 router.post('/order/createorder', requireauth, Createneworder  );
 router.get('/order/getorder/:userid', requireauth ,Getuserorder);
 router.get('/order/getallorder', requireauth, Usertype ,Getallorder);

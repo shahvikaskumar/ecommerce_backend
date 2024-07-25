@@ -5,7 +5,7 @@ const upload = require("../utility/multer");
 const requireauth = require("../middleware/auth");
 const Usertype = require("../middleware/usertype");
 
-
+// User Regarding routes
 router.get('/user/:id', Userdetail);
 router.get('/users/all',requireauth, Usertype, Getalluser);
 router.put("/user/update/:uid",requireauth, upload, Updateuserdetail);

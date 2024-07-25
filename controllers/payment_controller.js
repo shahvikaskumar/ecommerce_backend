@@ -8,7 +8,7 @@ const razorpay = new Razorpay({
     key_secret:Rakeysecret
 });
 
-
+//#region  Create Payment order for Razorpay
 const Createorder = async (req,res) => {
     const {amount} = req.body;
     
@@ -28,8 +28,9 @@ const Createorder = async (req,res) => {
         res.status(500).json(error);
     }
 };
+//#endregion
 
-
+//#region Payment Verification
 const Verifypayment = async (req,res) => {
     const { raorderid, rapayid, rasignature} = req.body;
 
@@ -44,6 +45,7 @@ const Verifypayment = async (req,res) => {
         res.json({status:'failure'});
     }
 };
+//#endregion
 
 module.exports = {Createorder, Verifypayment};
 

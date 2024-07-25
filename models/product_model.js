@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const converttime = require('../Utility/converttime');
 
+//#region  Product Schema
 const productschema = new mongoose.Schema({
     pname: {
         type: String,
@@ -79,6 +80,7 @@ const productschema = new mongoose.Schema({
     },
 
 }, { timestamps: true });
+//#endregion
 
 productschema.pre('save',converttime);
 
