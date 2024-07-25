@@ -50,7 +50,7 @@ const Getuserorder = async(req,res) => {
         const {userid} = req.params;        
         const orders = await ordermodel.find({userid:userid})
             .populate({path:'userid' , select:'-password'})
-            .populate({path:items.productid}).exex();
+            .populate({path:'items.productid'}).exec();
         res.status(200).json({success:"Order received.", data:orders});
     }
     catch(error){
@@ -63,7 +63,7 @@ const Getallorder = async(req,res) => {
     try{
         const orders = await ordermodel.find()
             .populate({path:'userid' , select:'-password'})
-            .populate({path:items.productid}).exex();
+            .populate({path:'items.productid'}).exec();
         res.status(200).json({success:"all order received.", data:orders});       
     }
     catch(error){
