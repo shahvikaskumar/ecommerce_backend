@@ -3,6 +3,7 @@ const router=express.Router();
 const requireauth=require('../middleware/auth');
 const { Authregister, Authlogin, Authverify, Authverifyemail, Forgotpassword, Resetpassword } = require("../controllers/auth_controller");
 
+// Auth Regarding routes
 router.post('/auth/register', Authregister);
 router.post("/auth/login",Authlogin);
 router.post("/auth/verify-token",requireauth, Authverify);

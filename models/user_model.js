@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const converttime = require('../Utility/converttime');
 
+//#region User Schema
 const userschema = new mongoose.Schema({
 
     name:{
@@ -58,10 +59,8 @@ const userschema = new mongoose.Schema({
     rpexpires:{
         type:Date,
     },
-
-
 },{timestamps:true});
-
+//#endregion
 
 userschema.pre('save',converttime);
 
